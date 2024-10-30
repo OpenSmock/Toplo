@@ -8,7 +8,8 @@ Class {
 		'innerElement',
 		'lineMode',
 		'frameManager',
-		'currText'
+		'currText',
+		'monitor'
 	],
 	#category : #'Toplo-Widget-Album-Label'
 }
@@ -171,9 +172,12 @@ ToLabel >> initialize [
 	self lineMode: self defaultLineMode.
 	self innerElement: self defaultTextElement.	
 	self text: self defaultText.
+	self focusability: BlFocusability ignore.
 
 	self isEditable: false.
-	self addEventHandler: self defaultEventHandler 
+	self addEventHandler: self defaultEventHandler.
+	
+	monitor := Monitor new.
 ]
 
 { #category : #'private-editing' }
@@ -290,6 +294,20 @@ ToLabel >> newRawSkin [
 ToLabel >> newTextAttributesBuilder [
 	
 	^ ToLabelAttributesBuilder onLabel: self
+]
+
+{ #category : #layout }
+ToLabel >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
+
+
+	monitor critical: [ super onLayout: aBounds context: aBlElementBoundsUpdateContext ]
+]
+
+{ #category : #layout }
+ToLabel >> onMeasure: anExtentMeasurementSpec [
+
+
+	monitor critical: [ super onMeasure: anExtentMeasurementSpec ]
 ]
 
 { #category : #'private-change' }

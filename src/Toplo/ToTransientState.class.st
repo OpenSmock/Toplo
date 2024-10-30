@@ -27,7 +27,7 @@ ToTransientState >> onAppliedOn: anElement [
 
 	super onAppliedOn: anElement.
 	skinEvent isConsumed ifTrue: [ self sourceEvent consume ].
-	skinEvent := nil
+	"skinEvent := nil"
 
 ]
 
