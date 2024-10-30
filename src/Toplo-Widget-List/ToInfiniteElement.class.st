@@ -4,7 +4,8 @@ Class {
 	#traits : 'TBlLayoutResizable',
 	#classTraits : 'TBlLayoutResizable classTrait',
 	#instVars : [
-		'listElement'
+		'listElement',
+		'monitor'
 	],
 	#category : #'Toplo-Widget-List-InnerInfinite'
 }
@@ -74,6 +75,12 @@ ToInfiniteElement >> disableScrolledEvent [
 ]
 
 { #category : #layout }
+ToInfiniteElement >> dispatchLayout [
+
+	monitor critical: [ super dispatchLayout ]
+]
+
+{ #category : #layout }
 ToInfiniteElement >> dispatchLayoutFinalStep [
 
 	super dispatchLayoutFinalStep.
@@ -104,7 +111,8 @@ ToInfiniteElement >> initialize [
 
 	super initialize.
 	self addEventHandler: ToListInnerContainerEventHandler new.
-	self matchParent
+	self matchParent.
+	monitor := Monitor new.
 ]
 
 { #category : #'t - infinite accessing' }

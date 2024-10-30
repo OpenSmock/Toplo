@@ -3,6 +3,9 @@ Class {
 	#superclass : #BlTextElement,
 	#traits : 'TToLabelInnerElement',
 	#classTraits : 'TToLabelInnerElement classTrait',
+	#instVars : [
+		'monitor'
+	],
 	#category : #'Toplo-Widget-Album-Label'
 }
 
@@ -27,8 +30,10 @@ ToLabelMonoLineInnerElement >> editorShortcutsIn: aLabel [
 { #category : #initialization }
 ToLabelMonoLineInnerElement >> initialize [ 
 
+	monitor := Monitor new.
 	super initialize.
-	self preventMouseEvents
+	self preventMouseEvents.
+	
 ]
 
 { #category : #initialization }
@@ -46,6 +51,13 @@ ToLabelMonoLineInnerElement >> newEditorIn: aLabel [
 	ed := ToTextField new.
 	(self editorShortcutsIn: aLabel) do: [ :s | ed editor addEditorShortcut: s ].
 	^ ed
+]
+
+{ #category : #layout }
+ToLabelMonoLineInnerElement >> onMeasure: anExtentMeasurementSpec [
+
+
+	monitor critical: [ super onMeasure: anExtentMeasurementSpec ]
 ]
 
 { #category : #layout }
@@ -67,4 +79,11 @@ ToLabelMonoLineInnerElement >> text [
 ToLabelMonoLineInnerElement >> text: aText [
 
 	super text: aText
+]
+
+{ #category : #layout }
+ToLabelMonoLineInnerElement >> textChanged [
+
+
+	monitor critical: [ super textChanged ]
 ]
