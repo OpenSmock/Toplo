@@ -308,6 +308,17 @@ ToThemeExamples class >> example_ToLabelWithHeadingSkin [
 	space show
 ]
 
+{ #category : #'examples - select' }
+ToThemeExamples class >> example_ToMultiSelect [
+
+	| select|
+	select := ToMultiSelectElement new.
+	select localTheme: ToBeeTheme new.
+	select popupListElement dataAccessor addAll: { 'choice1'. 'choice2'. 'choice3' }.
+		
+	select openInSpace 
+]
+
 { #category : #'examples - labels' }
 ToThemeExamples class >> example_WithLateBoundPropertyWriter [
 

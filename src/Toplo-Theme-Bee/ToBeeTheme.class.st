@@ -740,7 +740,80 @@ ToBeeTheme >> initializeStyleRules [
 	self declareLabelRules.
 	self declareIconInLabeledIconRules.
 	self declareButtonRules.
-	self declareTextPaneRules 
+	self declareTextPaneRules .
+	self initializeToMultiSelectStyleRules
+]
+
+{ #category : #'initialization - generated' }
+ToBeeTheme >> initializeToMultiSelectStyleRules [
+
+		
+	self select: (ToLabeledIcon asTypeSelector withParent: (ToMultiSelectListNode asTypeSelector)) 	style: [
+		self flag: 'LPL : Comment faire autrement avec material design ?'.
+		self when: ToInstallSkinEvent do: [ :e | | icon |
+			icon := ToMaterialDesignIconProvider iconNamed: 'outlined_checkboxoutlineblank'.
+			icon size: 20 asPoint.
+			e icon: icon ].
+		self when: ToSelectedSkinEvent do: [ :e | |icon|
+			icon := ToMaterialDesignIconProvider iconNamed: 'outlined_checkbox'.
+			icon size: 20 asPoint.
+			e icon innerImage: icon].
+		self when: ToSelectedSkinEvent do: [ :e |  |icon|
+			icon := ToMaterialDesignIconProvider iconNamed: 'outlined_checkboxoutlineblank'.
+			icon size: 20 asPoint. 
+			e icon innerImage: icon] ].
+
+	self select: ToMultiSelectListNode asTypeSelector style: [
+		self when: ToInstallSkinEvent write: (self property: #padding) with: [ :e |
+			BlInsets horizontal: 12 vertical: 12 ].
+		self when: ToInstallSkinEvent write: (self property: #'background-color') with: [:e |
+			Color transparent ].
+      self when: ToLeavedSkinEvent write: (self property: #'background-color') with: [:e |
+			Color transparent ].
+      self when: ToHoveredSkinEvent write: (self property: #'background-color') with: [:e |
+			Color gray ] ].
+
+	self select: ToMultiSelectElement asTypeSelector style: [
+		self when: ToInstallSkinEvent do: [ :e | | icon |
+				e popupListElement nodeBuilder: [ :node :aState :holder | | box |
+        			box := ToLabeledIcon new labelText: aState; startFlexible: true;
+                   		hMatchParent; beEndToStart; yourself.
+        			node addChild: box ].
+		
+				icon := ToMaterialDesignIconProvider iconNamed: 'outlined_expandmore'.
+				icon innerImageColor: Color black.
+				icon size: 20 asPoint.
+				e iconContainer icon: icon ].
+		self when: ToOpenedSkinEvent do: [ :e | | icon |
+				self flag: 'LPL : Comment faire autrement avec material design ?'.
+				icon := ToMaterialDesignIconProvider iconNamed: 'outlined_expandless'.
+				icon size: 20 asPoint.
+				icon innerImageColor: Color blue.
+				e iconContainer icon innerImage: icon].
+		self when: ToClosedSkinEvent do: [ :e | | icon |
+				self flag: 'LPL : Comment faire autrement avec material design ?'.
+				icon := ToMaterialDesignIconProvider iconNamed: 'outlined_expandmore'.
+				icon size: 20 asPoint.
+				e iconContainer icon innerImage: icon].
+		
+		self when: ToInstallSkinEvent write: (self property: #padding) with: [ :e |
+			BlInsets top: 3 left: 3 bottom: 3 right: 8 ].
+		self when: ToInstallSkinEvent write: (self property: #'border-with-builder') with: [ :e |
+				e borderBuilder paint: Color black; width: 1 ].
+		self when: ToOpenedSkinEvent write: (self property: #'border-with-builder') with: [ :e |
+				e borderBuilder paint: Color blue; width: 1 ]. 
+		self when: ToClosedSkinEvent write: (self property: #'border-with-builder') with: [ :e |
+				e borderBuilder paint: Color black; width: 1 ].
+			
+		self when: ToInstallSkinEvent write: (self property: #geometry) with: [:e |
+			BlRoundedRectangleGeometry cornerRadius: 4 ].
+
+		self when: ToInstallSkinEvent write: (self property: #'background-color') with: [ :e |
+			Color white ].
+		self when: ToLeavedSkinEvent write: (self property: #'background-color') with: [ :e |
+			Color white ].
+      self when: ToHoveredSkinEvent write: (self property: #'background-color') with: [:e |
+			Color gray alpha: 0.2 ] ]
 ]
 
 { #category : #styling }
