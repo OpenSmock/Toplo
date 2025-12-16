@@ -188,14 +188,19 @@ ToProgressCircle >> resizeProgressBar [
 
 	perimeter := circleWidth * Float pi.
 	dashLength := perimeter * self valueInPercentage.
+	
+	remainingBar border: (BlBorder builder
+		 width: lineWidth;
+		 paint: (self valueOfTokenNamed: #progressCircleRemainingBarBackground);
+		 build).
+
 
 	progressBar geometry: BlCircleGeometry new.
-	progressBar border: (BlBorder builder
+		progressBar border: (BlBorder builder
 			 dashArray: {
 					 dashLength.
 					 perimeter };
-			 paint: (self valueOfTokenNamed: #'color-primary');
 			 width: lineWidth;
-			 capRound;
+			 paint: (self valueOfTokenNamed: #progressCircleProgressBarBackground);
 			 build)
 ]

@@ -14,6 +14,6 @@ ToProgressCircleSkin >> installSkinEvent: anEvent [
 					 (e valueOfTokenNamed: #'color-text')) }.
 			e label textChanged ].
 
-		e remainingBar border:(BlBorder paint:
-			(e valueOfTokenNamed: #'color-bg-container-disabled')width: 4)]
+		e addTokenNamed: #progressCircleRemainingBarBackground withValue: (e valueOfTokenNamed: #'color-bg-container-disabled').
+		e addTokenNamed: #progressCircleProgressBarBackground withValue: (e valueOfTokenNamed: #'color-primary') ]
 ]
